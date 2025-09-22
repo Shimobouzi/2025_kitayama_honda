@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 182609603}
   - component: {fileID: 182609602}
   - component: {fileID: 182609601}
+  - component: {fileID: 182609605}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -329,12 +330,39 @@ Transform:
   m_GameObject: {fileID: 182609600}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.3603635, y: 8.59, z: 29.48}
+  m_LocalPosition: {x: -5.59, y: 14.1, z: 29.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &182609605
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182609600}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &599630017
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 1110591493}
   serializedVersion: 2
   m_LocalRotation: {x: 0.15996087, y: 0.7609082, z: -0.20470892, w: 0.5945801}
-  m_LocalPosition: {x: -9.03, y: 6.39, z: 7.47}
+  m_LocalPosition: {x: -19.427998, y: 18.20287, z: 38.037132}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -791,7 +819,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.8519, y: 1.6272, z: -6.3582}
-  m_LocalScale: {x: -39.29656, y: 0.61109, z: 46.267357}
+  m_LocalScale: {x: 39.29656, y: 0.61109, z: 46.267357}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
