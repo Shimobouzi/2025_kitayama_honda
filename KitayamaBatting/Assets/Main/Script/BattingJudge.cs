@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/*
+    バッティングの判定を行うスクリプト
+    - ボールが特定のエリアに入った際に判定を実行
+    - 判定結果をGameManagerに伝達し、ボールを停止させる
+*/
 public class BattingJudge : MonoBehaviour
 {
     [Header("判定設定")]
@@ -40,7 +45,7 @@ public class BattingJudge : MonoBehaviour
         Rigidbody ballRb = ball.GetComponent<Rigidbody>();
         if (ballRb != null)
         {
-            ballRb.velocity = Vector3.zero;
+            ballRb.linearVelocity = Vector3.zero;
             ballRb.angularVelocity = Vector3.zero;
         }
 

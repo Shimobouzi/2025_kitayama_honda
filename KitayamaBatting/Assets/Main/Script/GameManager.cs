@@ -1,5 +1,11 @@
 using UnityEngine;
 
+/*
+    ゲーム全体の管理を行うスクリプト
+    - バッティングの判定結果を受け取り、各種カウントを更新
+    - 次の投球に向けてボールをリセットする
+*/
+
 public class GameManager : MonoBehaviour
 {
     private int homeRunCount = 0;
