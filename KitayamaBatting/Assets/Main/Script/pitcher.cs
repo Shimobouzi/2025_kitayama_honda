@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class pitcher : MonoBehaviour
 {
      [SerializeField] GameObject sphere;
-    private float speed = 130;
+    private float speed = 60;
  
     void Update ()
     {
