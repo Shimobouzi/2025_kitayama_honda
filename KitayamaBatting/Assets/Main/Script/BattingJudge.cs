@@ -16,7 +16,7 @@ public class BattingJudge : MonoBehaviour
     void Start()
     {
         // GameManagerを探して参照を取得
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = GameObject.Find(".GameManager").GetComponent<GameManager>();
         if (gameManager == null)
         {
             Debug.LogError("BattingJudge: GameManagerが見つかりません。シーンに配置してください。");

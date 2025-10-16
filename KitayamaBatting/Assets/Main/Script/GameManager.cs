@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -14,14 +15,17 @@ public class GameManager : MonoBehaviour
 
     [Header("ボールのリセット設定")]
     [Tooltip("ボールを初期位置に戻す際の座標")]
-    public Vector3 ballSpawnPosition = new Vector3(0, 1, 10); 
-    private GameObject currentBall; // 現在フィールドにあるボール
+    public Vector3 ballSpawnPosition = new Vector3(0, 1, 10);
+    [SerializeField]
+    private GameObject Ball; // 現在フィールドにあるボール
+    [SerializeField]
+    private GameObject start;
+    private GameObject cnt;
 
     void Start()
     {
         // シーン内のボールオブジェクトを探す
-        currentBall = GameObject.FindGameObjectWithTag("Ball");
-        if (currentBall == null)
+        if (Ball == null)
         {
             Debug.LogWarning("GameManager: タグ'Ball'を持つオブジェクトが見つかりません。");
         }
@@ -53,16 +57,14 @@ public class GameManager : MonoBehaviour
         Invoke("ResetBallForNextPitch", 3f); // 3秒後にリセット（演出時間）
     }
 
-    private void ResetBallForNextPitch()
+    private void ResetBallForNextPitch(GameObject ball)
     {
-        if (currentBall != null)
-        {
-            BallController bc = currentBall.GetComponent<BallController>();
-            if (bc != null)
-            {
-                bc.ResetBall(ballSpawnPosition);
-                Debug.Log("ボールを次の投球位置にリセットしました。");
-            }
-        }
+        Destroy(ball);
+        Debug.Log(ball.name+"を破壊しました");
+    }
+
+    private IEnumerator GameStart()
+    {
+        yield return new WaitForSeconds(1.5f);
     }
 }
