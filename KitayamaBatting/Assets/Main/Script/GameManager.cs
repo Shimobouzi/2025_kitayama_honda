@@ -20,24 +20,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject currentBall; // 現在フィールドにあるボール
 
-    public class gameManagerUiObjects
-    {
-        public GameObject title;
-        public GameObject anten;
-        public GameObject ranking;
-        public GameObject start;
-        public GameObject playBall;
-        public GameObject cntGame;
-    }
     [SerializeField]
-    private gameManagerUiObjects objectsUi;
+    public GameObject title, anten, ranking, start, playBall, cntGame;
 
-    private class gameManager3dObjects
-    {
-        public pitcher pitcher;
-    }
     [SerializeField]
-    private gameManager3dObjects objects3d;
+    private pitcher pitcher;
+    
 
 
     void Start()
@@ -98,35 +86,35 @@ public class GameManager : MonoBehaviour
 
     private void TitleObjects()
     {
-        objectsUi.title.SetActive(true);
-        objectsUi.anten.SetActive(false);
-        objectsUi.ranking.SetActive(true);
-        objectsUi.start.SetActive(true);
-        objectsUi.playBall.SetActive(false);
-        objectsUi.cntGame.SetActive(false);
+        title.SetActive(true);
+        anten.SetActive(false);
+        ranking.SetActive(true);
+        start.SetActive(true);
+        playBall.SetActive(false);
+        cntGame.SetActive(false);
     }
 
     private void StartObjects()
     {
-        objectsUi.title.SetActive(false);
-        objectsUi.ranking.SetActive(false);
-        objectsUi.start.SetActive(false);
-        objectsUi.playBall.SetActive(true);
-        objectsUi.cntGame.SetActive(false);
+        title.SetActive(false);
+        ranking.SetActive(false);
+        start.SetActive(false);
+        playBall.SetActive(true);
+        cntGame.SetActive(false);
     }
 
     private IEnumerator GameStart()
     {
         StartObjects();
         yield return new WaitForSeconds(1.5f);
-        objectsUi.playBall.SetActive(false);
+        playBall.SetActive(false);
         StartCoroutine(throwBall());
     }
 
     private IEnumerator throwBall()
     {
         playCount++;
-        objects3d.pitcher.Ball();
+        pitcher.Ball();
         currentBall = GameObject.FindGameObjectWithTag("Ball");
         if (currentBall == null)
         {
