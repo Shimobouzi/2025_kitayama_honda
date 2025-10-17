@@ -1,5 +1,14 @@
 using UnityEngine;
 
+public enum JudgeType
+{
+    HomeRun,
+    Hit,
+    ThreeBaseHit,
+    Foul,
+    Unknown
+}
+
 /*
     バッティングの判定を行うスクリプト
     - ボールが特定のエリアに入った際に判定を実行
@@ -7,9 +16,11 @@ using UnityEngine;
 */
 public class BattingJudge : MonoBehaviour
 {
+    
     [Header("判定設定")]
-    [Tooltip("Inspectorで 'HomeRun', 'Hit', 'Foul' のいずれかを設定")]
-    public string judgeType = "Unknown";
+    [Tooltip("Inspectorで 'HomeRun', 'Hit', 'ThreeBaseHit', 'Foul' のいずれかを設定")]
+    [SerializeField]
+    private JudgeType judgeType = JudgeType.Unknown;
     
     private GameManager gameManager;
 

@@ -13,38 +13,56 @@ public class GameManager : MonoBehaviour
     private int hitCount = 0;
     private int foulCount = 0;
 
-    [Header("ボールのリセット設定")]
-    [Tooltip("ボールを初期位置に戻す際の座標")]
-    public Vector3 ballSpawnPosition = new Vector3(0, 1, 10);
     [SerializeField]
-    private GameObject Ball; // 現在フィールドにあるボール
+    private int gameCnt = 5;
+    private int playCount = 0;
+
     [SerializeField]
-    private GameObject start;
-    private GameObject cnt;
+    private GameObject currentBall; // 現在フィールドにあるボール
+
+    public class gameManagerUiObjects
+    {
+        public GameObject title;
+        public GameObject anten;
+        public GameObject ranking;
+        public GameObject start;
+        public GameObject playBall;
+        public GameObject cntGame;
+    }
+    [SerializeField]
+    private gameManagerUiObjects objectsUi;
+
+    private class gameManager3dObjects
+    {
+        public pitcher pitcher;
+    }
+    [SerializeField]
+    private gameManager3dObjects objects3d;
+
 
     void Start()
     {
-        // シーン内のボールオブジェクトを探す
-        if (Ball == null)
-        {
-            Debug.LogWarning("GameManager: タグ'Ball'を持つオブジェクトが見つかりません。");
-        }
+        TitleObjects();
     }
 
     // 判定スクリプトから呼び出されるメイン処理
-    public void ProcessResult(string result)
+    public void ProcessResult(JudgeType result)
     {
         switch (result)
         {
-            case "HomeRun":
+            case JudgeType.HomeRun:
                 homeRunCount++;
                 Debug.Log("ホームラン！HR数: " + homeRunCount);
                 break;
-            case "Hit":
+            case JudgeType.Hit:
                 hitCount++;
-                Debug.Log("ヒット！（内野/外野）ヒット数: " + hitCount);
+                Debug.Log("ヒット！内野ヒット数: " + hitCount);
                 break;
-            case "Foul":
+            case JudgeType.ThreeBaseHit:
+                hitCount++;
+                Debug.Log("3ベースヒット！外野ヒット数: " + hitCount);
+                break;
+            case JudgeType.Foul:
                 foulCount++;
                 Debug.Log("ファール。ファール数: " + foulCount);
                 break;
@@ -52,19 +70,64 @@ public class GameManager : MonoBehaviour
                 Debug.Log("不明な判定: " + result);
                 break;
         }
-        
+
         // 判定処理後、次の投球のためにボールをリセット
-        Invoke("ResetBallForNextPitch", 3f); // 3秒後にリセット（演出時間）
+        StartCoroutine(PlayBallAgain()); // 3秒後にリセット（演出時間）
     }
 
-    private void ResetBallForNextPitch(GameObject ball)
+    private IEnumerator PlayBallAgain()
     {
-        Destroy(ball);
-        Debug.Log(ball.name+"を破壊しました");
+        Coroutine col = StartCoroutine(ResetBallForNextPitch());
+        yield return col;
+        if (playCount < gameCnt)
+        {
+            StartCoroutine(throwBall());
+        }
+        else
+        {
+
+        }
+    }
+
+    private IEnumerator ResetBallForNextPitch()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(currentBall);
+        Debug.Log(currentBall.name+"を破壊しました");
+    }
+
+    private void TitleObjects()
+    {
+        objectsUi.title.SetActive(true);
+        objectsUi.anten.SetActive(false);
+        objectsUi.ranking.SetActive(true);
+        objectsUi.start.SetActive(true);
+        objectsUi.playBall.SetActive(false);
+        objectsUi.cntGame.SetActive(false);
+    }
+
+    private void StartObjects()
+    {
+        objectsUi.title.SetActive(false);
+        objectsUi.ranking.SetActive(false);
+        objectsUi.start.SetActive(false);
+        objectsUi.playBall.SetActive(true);
+        objectsUi.cntGame.SetActive(false);
     }
 
     private IEnumerator GameStart()
     {
+        StartObjects();
         yield return new WaitForSeconds(1.5f);
+        objectsUi.playBall.SetActive(false);
+        StartCoroutine(throwBall());
+    }
+
+    private IEnumerator throwBall()
+    {
+        playCount++;
+        objects3d.pitcher.Ball();
+        currentBall = gameObject.
+        yield return new WaitForSeconds(0);
     }
 }
