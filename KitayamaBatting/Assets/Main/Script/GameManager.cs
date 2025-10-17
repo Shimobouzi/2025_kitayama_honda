@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
     ゲーム全体の管理を行うスクリプト
@@ -21,7 +22,9 @@ public class GameManager : MonoBehaviour
     private GameObject currentBall; // 現在フィールドにあるボール
 
     [SerializeField]
-    public GameObject title, anten, ranking, start, playBall, cntGame;
+    public GameObject title, ranking, start, playBall, cntGame;
+    [SerializeField]
+    private Image anten;
 
     [SerializeField]
     private pitcher pitcher;
@@ -77,6 +80,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        StartCoroutine(GameStart());
+    }
+
     private IEnumerator ResetBallForNextPitch()
     {
         yield return new WaitForSeconds(3f);
@@ -87,7 +95,7 @@ public class GameManager : MonoBehaviour
     private void TitleObjects()
     {
         title.SetActive(true);
-        anten.SetActive(false);
+        anten.gameObject.SetActive(false);
         ranking.SetActive(true);
         start.SetActive(true);
         playBall.SetActive(false);
@@ -105,10 +113,38 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameStart()
     {
+        anten.gameObject.SetActive(true);
+        for (int i = 0; i < 256; i++)
+        {
+            anten.color = new Color(0, 0, 0, i);
+        }
         StartObjects();
+        yield return new WaitForSeconds(1f);
+        for (int i = 255; i >= 0; i--)
+        {
+            anten.color = new Color(0, 0, 0, i);
+        }
+        anten.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         playBall.SetActive(false);
         StartCoroutine(throwBall());
+    }
+
+    private IEnumerator GameSet()
+    {
+        anten.gameObject.SetActive(true);
+        for (int i = 0; i < 256; i++)
+        {
+            anten.color = new Color(0, 0, 0, i);
+        }
+        TitleObjects();
+        yield return new WaitForSeconds(1f);
+        for (int i = 255; i >= 0; i--)
+        {
+            anten.color = new Color(0, 0, 0, i);
+        }
+        anten.gameObject.SetActive(false);
+
     }
 
     private IEnumerator throwBall()
