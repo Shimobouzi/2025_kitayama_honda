@@ -127,7 +127,11 @@ public class GameManager : MonoBehaviour
     {
         playCount++;
         objects3d.pitcher.Ball();
-        currentBall = gameObject.
-        yield return new WaitForSeconds(0);
+        currentBall = GameObject.FindGameObjectWithTag("Ball");
+        if (currentBall == null)
+        {
+            Debug.LogWarning("GameManager: タグ'Ball'を持つオブジェクトが見つかりません。");
+        }
+        yield return new WaitForSeconds(0f);
     }
 }
