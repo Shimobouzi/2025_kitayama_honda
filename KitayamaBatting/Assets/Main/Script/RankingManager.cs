@@ -38,6 +38,13 @@ public class RankingManager : MonoBehaviour
         return scoreData.scores;
     }
 
+    public void ResetRanking()
+    {
+       scoreData.scores.Clear();
+        string json = JsonUtility.ToJson(scoreData, true); // trueでJSONを整形
+        File.WriteAllText(filePath, json);
+    }
+
     private void SaveRanking()
     {
         string json = JsonUtility.ToJson(scoreData, true); // trueでJSONを整形

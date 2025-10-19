@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class RankingUIController : MonoBehaviour
 {
     public RankingManager rankingManager;
-    public Text rankingText; // またはTextMeshProUGUI
+    public TextMeshPro rankingText; // またはTextMeshProUGUI
 
     void Start()
     {

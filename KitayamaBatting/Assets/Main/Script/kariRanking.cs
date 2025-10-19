@@ -5,8 +5,11 @@ public class kariRanking : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public RankingManager rank;
 
-    
 
+    public void kariTaro()
+    {
+        rank.AddScore("Taro", 300);
+    }
     public void kariJiro()
     {
         rank.AddScore("jiro", 200);

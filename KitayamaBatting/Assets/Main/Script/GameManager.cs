@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
     ゲーム全体の管理を行うスクリプト
@@ -13,38 +14,47 @@ public class GameManager : MonoBehaviour
     private int hitCount = 0;
     private int foulCount = 0;
 
-    [Header("ボールのリセット設定")]
-    [Tooltip("ボールを初期位置に戻す際の座標")]
-    public Vector3 ballSpawnPosition = new Vector3(0, 1, 10);
     [SerializeField]
-    private GameObject Ball; // 現在フィールドにあるボール
+    private int gameCnt = 5;
+    private int playCount = 0;
+
     [SerializeField]
-    private GameObject start;
-    private GameObject cnt;
+    private GameObject currentBall; // 現在フィールドにあるボール
+
+    [SerializeField]
+    public GameObject title, ranking, start, playBall, cntGame;
+    [SerializeField]
+    private Image anten;
+
+    [SerializeField]
+    private pitcher pitcher;
+    
+
 
     void Start()
     {
-        // シーン内のボールオブジェクトを探す
-        if (Ball == null)
-        {
-            Debug.LogWarning("GameManager: タグ'Ball'を持つオブジェクトが見つかりません。");
-        }
+        TitleObjects();
+        StartCoroutine(GameStart());
     }
 
     // 判定スクリプトから呼び出されるメイン処理
-    public void ProcessResult(string result)
+    public void ProcessResult(JudgeType result)
     {
         switch (result)
         {
-            case "HomeRun":
+            case JudgeType.HomeRun:
                 homeRunCount++;
                 Debug.Log("ホームラン！HR数: " + homeRunCount);
                 break;
-            case "Hit":
+            case JudgeType.Hit:
                 hitCount++;
-                Debug.Log("ヒット！（内野/外野）ヒット数: " + hitCount);
+                Debug.Log("ヒット！内野ヒット数: " + hitCount);
                 break;
-            case "Foul":
+            case JudgeType.ThreeBaseHit:
+                hitCount++;
+                Debug.Log("3ベースヒット！外野ヒット数: " + hitCount);
+                break;
+            case JudgeType.Foul:
                 foulCount++;
                 Debug.Log("ファール。ファール数: " + foulCount);
                 break;
@@ -52,19 +62,103 @@ public class GameManager : MonoBehaviour
                 Debug.Log("不明な判定: " + result);
                 break;
         }
-        
+
         // 判定処理後、次の投球のためにボールをリセット
-        Invoke("ResetBallForNextPitch", 3f); // 3秒後にリセット（演出時間）
+        StartCoroutine(PlayBallAgain()); // 3秒後にリセット（演出時間）
     }
 
-    private void ResetBallForNextPitch(GameObject ball)
+    private IEnumerator PlayBallAgain()
     {
-        Destroy(ball);
-        Debug.Log(ball.name+"を破壊しました");
+        Coroutine col = StartCoroutine(ResetBallForNextPitch());
+        yield return col;
+        if (playCount < gameCnt)
+        {
+            StartCoroutine(throwBall());
+        }
+        else
+        {
+
+        }
+    }
+
+    public void StartGame()
+    {
+        StartCoroutine(GameStart());
+    }
+
+    private IEnumerator ResetBallForNextPitch()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(currentBall);
+        Debug.Log(currentBall.name+"を破壊しました");
+    }
+
+    private void TitleObjects()
+    {
+        title.SetActive(true);
+        anten.gameObject.SetActive(false);
+        ranking.SetActive(true);
+        start.SetActive(true);
+        playBall.SetActive(false);
+        cntGame.SetActive(false);
+    }
+
+    private void StartObjects()
+    {
+        title.SetActive(false);
+        ranking.SetActive(false);
+        start.SetActive(false);
+        playBall.SetActive(true);
+        cntGame.SetActive(false);
     }
 
     private IEnumerator GameStart()
     {
+        anten.gameObject.SetActive(true);
+        for (float i = 0; i < 1; i = i + 0.01f)
+        {
+            anten.color = new Color(0, 0, 0, i);
+            yield return new WaitForSeconds(0.01f);
+        }
+        StartObjects();
+        yield return new WaitForSeconds(1f);
+        for (float i = 1; i >= 0; i = i - 0.01f)
+        {
+            anten.color = new Color(0, 0, 0, i);
+            yield return new WaitForSeconds(0.01f);
+        }
+        anten.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.5f);
+        playBall.SetActive(false);
+        StartCoroutine(throwBall());
+    }
+
+    private IEnumerator GameSet()
+    {
+        anten.gameObject.SetActive(true);
+        for (int i = 0; i < 256; i++)
+        {
+            anten.color = new Color(0, 0, 0, i);
+        }
+        TitleObjects();
+        yield return new WaitForSeconds(1f);
+        for (int i = 255; i >= 0; i--)
+        {
+            anten.color = new Color(0, 0, 0, i);
+        }
+        anten.gameObject.SetActive(false);
+
+    }
+
+    private IEnumerator throwBall()
+    {
+        playCount++;
+        pitcher.Ball();
+        yield return new WaitForSeconds(0.1f);
+        currentBall = GameObject.FindGameObjectWithTag("Ball");
+        if (currentBall == null)
+        {
+            Debug.LogWarning("GameManager: タグ'Ball'を持つオブジェクトが見つかりません。");
+        }
     }
 }
