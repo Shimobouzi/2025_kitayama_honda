@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         TitleObjects();
+        StartCoroutine(GameStart());
     }
 
     // 判定スクリプトから呼び出されるメイン処理
@@ -114,15 +115,17 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameStart()
     {
         anten.gameObject.SetActive(true);
-        for (int i = 0; i < 256; i++)
+        for (float i = 0; i < 1; i = i + 0.01f)
         {
             anten.color = new Color(0, 0, 0, i);
+            yield return new WaitForSeconds(0.01f);
         }
         StartObjects();
         yield return new WaitForSeconds(1f);
-        for (int i = 255; i >= 0; i--)
+        for (float i = 1; i >= 0; i = i - 0.01f)
         {
             anten.color = new Color(0, 0, 0, i);
+            yield return new WaitForSeconds(0.01f);
         }
         anten.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.5f);
@@ -151,11 +154,11 @@ public class GameManager : MonoBehaviour
     {
         playCount++;
         pitcher.Ball();
+        yield return new WaitForSeconds(0.1f);
         currentBall = GameObject.FindGameObjectWithTag("Ball");
         if (currentBall == null)
         {
             Debug.LogWarning("GameManager: タグ'Ball'を持つオブジェクトが見つかりません。");
         }
-        yield return new WaitForSeconds(0f);
     }
 }

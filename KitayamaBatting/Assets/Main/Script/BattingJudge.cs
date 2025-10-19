@@ -27,7 +27,7 @@ public class BattingJudge : MonoBehaviour
     void Start()
     {
         // GameManagerを探して参照を取得
-        gameManager = GameObject.Find(".GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (gameManager == null)
         {
             Debug.LogError("BattingJudge: GameManagerが見つかりません。シーンに配置してください。");
@@ -35,12 +35,12 @@ public class BattingJudge : MonoBehaviour
     }
 
     // ボールがTriggerエリアに進入したことを検出
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
         // 進入したのが「Ball」（ボール）タグを持つオブジェクトか確認
-        if (other.gameObject.CompareTag("Ball"))
+        if (collision.gameObject.CompareTag("Ball"))
         {
-            ExecuteJudge(other.gameObject);
+            ExecuteJudge(collision.gameObject);
         }
     }
 
@@ -56,8 +56,7 @@ public class BattingJudge : MonoBehaviour
         Rigidbody ballRb = ball.GetComponent<Rigidbody>();
         if (ballRb != null)
         {
-            ballRb.linearVelocity = Vector3.zero;
-            ballRb.angularVelocity = Vector3.zero;
+            Destroy(ballRb);
         }
 
         Debug.Log("⚾️ 判定確定: " + judgeType);
