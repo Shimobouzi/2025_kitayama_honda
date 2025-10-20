@@ -2,12 +2,12 @@ using UnityEngine;
 public class BatController : MonoBehaviour
 {
     public float hitForce = 10f; // ボールに与える基本的な力
-    public AudioClip hitSound; // バットがボールに当たったときの音
-    private AudioSource audioSource; // 音を再生するためのコンポーネント
+    //public AudioClip hitSound; // バットがボールに当たったときの音
+    //private AudioSource audioSource; // 音を再生するためのコンポーネント
     private void Start()
     {
         // AudioSourceを追加
-        audioSource = gameObject.AddComponent<AudioSource>();
+        //audioSource = gameObject.AddComponent<AudioSource>();
     }
     private void OnCollisionEnter(Collision collision)
     {

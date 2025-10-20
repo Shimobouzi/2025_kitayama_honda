@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private GameObject currentBall; // 現在フィールドにあるボール
 
     [SerializeField]
-    public GameObject title, ranking, start, playBall, cntGame;
+    public GameObject title, ranking, start, next, playBall, cntGame;
     [SerializeField]
     private Image anten;
 
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         yield return col;
         if (playCount < gameCnt)
         {
-            StartCoroutine(throwBall());
+            NextObjects();
         }
         else
         {
@@ -108,8 +108,14 @@ public class GameManager : MonoBehaviour
         title.SetActive(false);
         ranking.SetActive(false);
         start.SetActive(false);
+        next.SetActive(false);
         playBall.SetActive(true);
         cntGame.SetActive(false);
+    }
+
+    public void NextObjects()
+    {
+        next.SetActive(true);
     }
 
     private IEnumerator GameStart()
@@ -148,6 +154,12 @@ public class GameManager : MonoBehaviour
         }
         anten.gameObject.SetActive(false);
 
+    }
+
+    public void throwBallVoid()
+    {
+        next.SetActive(false);
+        StartCoroutine(throwBall());
     }
 
     private IEnumerator throwBall()
