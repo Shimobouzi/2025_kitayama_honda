@@ -1,0 +1,8 @@
+﻿key,type,file,channel
+bgm1,bgm,bgm1,0
+catch,se,catch,1
+kakiin,se,kakiin,1
+throw,se,throw,1
+clap_mini,se,clap_mini,2
+clap_midi,se,clap_midi,3
+clap_max,se,clap_max,4

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         TitleObjects();
         StartCoroutine(GameStart());
+        SoundManager.PlayBgm("bgm1");
     }
 
     // 判定スクリプトから呼び出されるメイン処理
