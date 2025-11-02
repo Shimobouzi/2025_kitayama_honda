@@ -2574,6 +2574,7 @@ MonoBehaviour:
   title: {fileID: 224214471}
   ranking: {fileID: 1355090860}
   start: {fileID: 1032355283}
+  next: {fileID: 0}
   playBall: {fileID: 1699242779}
   cntGame: {fileID: 1094588274}
   anten: {fileID: 1525298447}

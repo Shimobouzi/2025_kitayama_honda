@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 41679676}
   - component: {fileID: 41679675}
   - component: {fileID: 41679677}
+  - component: {fileID: 41679678}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -480,7 +481,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000007, y: 1.6282129, z: 1.0000057}
+  m_Size: {x: 2.000001, y: 1.6282129, z: 2.000006}
   m_Center: {x: 0.000016971098, y: 0.18589407, z: 0.0000022936226}
 --- !u!54 &41679676
 Rigidbody:
@@ -522,7 +523,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitForce: 10
-  hitSound: {fileID: 0}
+  hitMultiplier: 1
+  useProximityHit: 0
+  proximityRadius: 1
+  proximityCooldown: 0.2
+--- !u!136 &41679678
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41679670}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5000006
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: -0.000015199184, y: 0.0000038146973, z: 0.000015169382}
 --- !u!1 &224214471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,6 +2616,7 @@ MonoBehaviour:
   title: {fileID: 224214471}
   ranking: {fileID: 1355090860}
   start: {fileID: 1032355283}
+  next: {fileID: 0}
   playBall: {fileID: 1699242779}
   cntGame: {fileID: 1094588274}
   anten: {fileID: 1525298447}
