@@ -372,6 +372,7 @@ MonoBehaviour:
   point: {fileID: 567416599}
   sphere: {fileID: 7332433687148930217, guid: 4a8f3910059477b4d9a135199a79fa40, type: 3}
   speed: 60
+  model: {fileID: 0}
 --- !u!1 &41679670
 GameObject:
   m_ObjectHideFlags: 0
