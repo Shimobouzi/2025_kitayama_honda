@@ -36,6 +36,8 @@ public class BatController : MonoBehaviour
     public void ProcessHit(GameObject ball)
     {
         Debug.Log("ボールがバットに当たりました！");
+        SoundManager.PlaySE("kakiin");
+
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
         if (ballRigidbody == null) return;
 

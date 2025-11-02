@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
         start.SetActive(true);
         playBall.SetActive(false);
         cntGame.SetActive(false);
+        next.SetActive(false);
     }
 
     private void StartObjects()
