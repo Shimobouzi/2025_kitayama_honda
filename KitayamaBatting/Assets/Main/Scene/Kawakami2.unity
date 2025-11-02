@@ -480,7 +480,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000007, y: 1.6282129, z: 1.0000057}
+  m_Size: {x: 2.000001, y: 1.6282129, z: 2.000006}
   m_Center: {x: 0.000016971098, y: 0.18589407, z: 0.0000022936226}
 --- !u!54 &41679676
 Rigidbody:
@@ -522,7 +522,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitForce: 10
-  hitSound: {fileID: 0}
+  hitMultiplier: 1
+  useProximityHit: 0
+  proximityRadius: 1
+  proximityCooldown: 0.2
 --- !u!1 &224214471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,6 +2592,7 @@ MonoBehaviour:
   title: {fileID: 224214471}
   ranking: {fileID: 1355090860}
   start: {fileID: 1032355283}
+  next: {fileID: 0}
   playBall: {fileID: 1699242779}
   cntGame: {fileID: 1094588274}
   anten: {fileID: 1525298447}
