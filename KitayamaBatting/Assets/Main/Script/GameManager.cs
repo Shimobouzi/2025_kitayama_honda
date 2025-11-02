@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
     {
         playCount++;
         pitcher.Ball();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2.8f);
         currentBall = GameObject.FindGameObjectWithTag("Ball");
         if (currentBall == null)
         {
