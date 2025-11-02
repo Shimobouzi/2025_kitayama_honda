@@ -15,7 +15,7 @@ public class RankingUIController : MonoBehaviour
     public void DisplayRanking()
     {
         List<ScoreEntry> ranking = rankingManager.GetRanking();
-        string displayText = "--- RANKING ---\n\n";
+        string displayText = "---- XXX ----\n\n";
 
         for (int i = 0; i < ranking.Count; i++)
         {
