@@ -12,6 +12,7 @@ public class BatTobashi : MonoBehaviour
         {
             Debug.Log("ボールがバットに当たりました！");
             SoundManager.PlaySE("kakiin");
+            //StartCoroutine(Vibrate(0.3f, 0.3f, 0.5f,  OVRInput.Controller.RTouch));
             // ボールのRigidbodyを取得
             Rigidbody ballRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             if (ballRigidbody != null)
@@ -28,5 +29,11 @@ public class BatTobashi : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         // ボールにバットの速度を加えて飛ばす
         rb.linearVelocity = rb.linearVelocity * hitForce;
+    }
+    private IEnumerator Vibrate(float frequency, float amplitude, float duration, OVRInput.Controller controller)
+    {
+        OVRInput.SetControllerVibration(frequency, amplitude, controller);
+        yield return new WaitForSeconds(duration);
+        OVRInput.SetControllerVibration(0, 0, controller); // バイブレーションを停止
     }
 }

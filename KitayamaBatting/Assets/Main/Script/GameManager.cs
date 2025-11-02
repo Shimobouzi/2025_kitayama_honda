@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("ヒット！内野ヒット数: " + hitCount);
                 break;
             case JudgeType.ThreeBaseHit:
-                hitCount++;
+                exhitCount++;
                 ExHit.SetActive(true);
                 SoundManager.PlaySE("clap_midi");
                 Debug.Log("3ベースヒット！外野ヒット数: " + hitCount);
