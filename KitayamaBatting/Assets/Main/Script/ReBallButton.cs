@@ -7,6 +7,7 @@ public class ReBallButton : MonoBehaviour
     private GameManager gameManager;
     private void OnTriggerEnter(Collider other)
     {
+        this.gameObject.SetActive(false);
         gameManager.throwBallVoid();
     }
 }
