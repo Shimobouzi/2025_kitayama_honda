@@ -1,7 +1,7 @@
 using UnityEngine;
 public class BatController : MonoBehaviour
 {
-    public float hitForce = 10f; // ボールに与える基本的な力（インスペクタで増やすと飛距離が伸びます）
+    public float hitForce = 30f; // ボールに与える基本的な力（インスペクタで増やすと飛距離が伸びます）
     [Tooltip("Additional multiplier applied to the impulse (for tuning flight distance)")]
     public float hitMultiplier = 1.0f;
     [Header("Proximity hit (larger hit range)")]
@@ -11,6 +11,9 @@ public class BatController : MonoBehaviour
     public float proximityRadius = 1.0f;
     [Tooltip("Cooldown (sec) after a proximity hit to avoid duplicate hits")]
     public float proximityCooldown = 0.2f;
+    [Header("Hit angle tuning")]
+    [Tooltip("Upward bias multiplier applied to hits (increase to make hits loftier)")]
+    public float upwardBias = 10.0f;
     //public AudioClip hitSound; // バットがボールに当たったときの音
     //private AudioSource audioSource; // 音を再生するためのコンポーネント
     private void Start()
@@ -46,8 +49,9 @@ public class BatController : MonoBehaviour
             batVelocity = batRb.linearVelocity;
         }
 
-        Vector3 impulse = batVelocity * hitForce * hitMultiplier;
-        impulse += Vector3.up * (Mathf.Abs(Vector3.Dot(batVelocity.normalized, Vector3.forward)) * 2.0f);
+    Vector3 impulse = batVelocity * hitForce * hitMultiplier;
+    // apply configurable upward bias to make hits loftier
+    impulse += Vector3.up * (Mathf.Abs(Vector3.Dot(batVelocity.normalized, Vector3.forward)) * upwardBias);
         ballRigidbody.AddForce(impulse, ForceMode.VelocityChange);
     }
 }
