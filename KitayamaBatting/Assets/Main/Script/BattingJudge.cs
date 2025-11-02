@@ -6,6 +6,7 @@ public enum JudgeType
     Hit,
     ThreeBaseHit,
     Foul,
+    Strike,
     Unknown
 }
 

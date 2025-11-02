@@ -1,5 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /*
@@ -12,7 +14,9 @@ public class GameManager : MonoBehaviour
 {
     private int homeRunCount = 0;
     private int hitCount = 0;
+    private int exhitCount = 0;
     private int foulCount = 0;
+    private int scoreDate = 0;
 
     [SerializeField]
     private int gameCnt = 5;
@@ -22,13 +26,19 @@ public class GameManager : MonoBehaviour
     private GameObject currentBall; // 現在フィールドにあるボール
 
     [SerializeField]
-    public GameObject title, ranking, start, next, playBall, cntGame;
+    public GameObject title, ranking, start, next, playBall, cntGame, Hit, ExHit, HomeRun, Foul, Strike;
     [SerializeField]
     private Image anten;
 
     [SerializeField]
     private pitcher pitcher;
-    
+
+    [SerializeField]
+    private TextMeshPro score;
+
+    [SerializeField]
+    private RankingManager rank;
+
 
 
     void Start()
@@ -47,21 +57,34 @@ public class GameManager : MonoBehaviour
         {
             case JudgeType.HomeRun:
                 homeRunCount++;
+                HomeRun.SetActive(true);
+                SoundManager.PlaySE("clap_max");
                 Debug.Log("ホームラン！HR数: " + homeRunCount);
                 break;
             case JudgeType.Hit:
                 hitCount++;
+                Hit.SetActive(true);
+                SoundManager.PlaySE("clap_mini");
                 Debug.Log("ヒット！内野ヒット数: " + hitCount);
                 break;
             case JudgeType.ThreeBaseHit:
-                hitCount++;
+                exhitCount++;
+                ExHit.SetActive(true);
+                SoundManager.PlaySE("clap_midi");
                 Debug.Log("3ベースヒット！外野ヒット数: " + hitCount);
                 break;
             case JudgeType.Foul:
                 foulCount++;
+                Foul.SetActive(true);
                 Debug.Log("ファール。ファール数: " + foulCount);
                 break;
+            case JudgeType.Strike:
+                Strike.SetActive(true);
+                SoundManager.PlaySE("catch");
+                Debug.Log("ST: ");
+                break;
             default:
+                Foul.SetActive(true);
                 Debug.Log("不明な判定: " + result);
                 break;
         }
@@ -80,7 +103,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-
+            scoreDate += homeRunCount * 1000;
+            scoreDate += exhitCount * 500;
+            scoreDate += hitCount * 100;
+            score.text += scoreDate.ToString();
+            score.gameObject.SetActive(true);
+            rank.AddScore("tarou", scoreDate);
+            yield return new WaitForSeconds(8f);
+            SceneManager.LoadScene("Tougou2");
         }
     }
 
@@ -94,6 +124,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(currentBall);
         Debug.Log(currentBall.name+"を破壊しました");
+        Hit.SetActive(false);
+        ExHit.SetActive(false);
+        Foul.SetActive(false);
+        HomeRun.SetActive(false);
+        Strike.SetActive(false);
     }
 
     private void TitleObjects()
@@ -105,6 +140,12 @@ public class GameManager : MonoBehaviour
         playBall.SetActive(false);
         cntGame.SetActive(false);
         next.SetActive(false);
+        Hit.SetActive(false); 
+        ExHit.SetActive(false);
+        Foul.SetActive(false);
+        HomeRun.SetActive(false);
+        Strike.SetActive(false);
+        score.gameObject.SetActive(false);
     }
 
     private void StartObjects()
@@ -113,8 +154,14 @@ public class GameManager : MonoBehaviour
         ranking.SetActive(false);
         start.SetActive(false);
         next.SetActive(false);
-        playBall.SetActive(true);
+        playBall.SetActive(false);
         cntGame.SetActive(false);
+        next.SetActive(false);
+        Hit.SetActive(false);
+        ExHit.SetActive(false);
+        Foul.SetActive(false);
+        HomeRun.SetActive(false);
+        Strike.SetActive(false);
     }
 
     public void NextObjects()
@@ -138,6 +185,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         anten.gameObject.SetActive(false);
+        playBall.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         playBall.SetActive(false);
         StartCoroutine(throwBall());
