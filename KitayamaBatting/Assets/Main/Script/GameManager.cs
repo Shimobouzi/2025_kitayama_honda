@@ -34,8 +34,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         TitleObjects();
-        StartCoroutine(GameStart());
         SoundManager.PlayBgm("bgm1");
+#if UNITY_EDITOR
+        StartCoroutine(GameStart());
+#endif
     }
 
     // 判定スクリプトから呼び出されるメイン処理

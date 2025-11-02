@@ -4,7 +4,7 @@ public class BallController : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("bat"))
+        if (collision.gameObject.CompareTag("Bat"))
         {
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb == null)
