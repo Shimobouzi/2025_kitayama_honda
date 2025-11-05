@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
             scoreDate += hitCount * 100;
             score.text += scoreDate.ToString();
             score.gameObject.SetActive(true);
-            rank.AddScore("tarou", scoreDate);
+            rank.AddScore("tarou"+rank.scoreData.scores.Count.ToString(), scoreDate);
             yield return new WaitForSeconds(8f);
             SceneManager.LoadScene("Tougou2");
         }

@@ -6,7 +6,7 @@ public class RankingManager : MonoBehaviour
 {
     private string filePath;
     [SerializeField]
-    private ScoreData scoreData = new ScoreData();
+    public ScoreData scoreData = new ScoreData();
     private const int maxEntries = 10; // ランキングに表示する最大数
 
     void Awake()
